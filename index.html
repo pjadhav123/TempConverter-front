@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>Temperature Converter App</title>
+    <link rel="stylesheet" href="mystyle.css" />
+</head>
+
+<body>
+    <h1>Temperature Converter App</h1>
+
+    <form onsubmit="convert(event)">
+        <input type="number" step="0.01" id="temp" placeholder="Enter Temperature" />
+        <br><br>
+
+        <label>Select One</label><br>
+
+        <input type="radio" name="c" id="cel2fah" checked /> Cel2Fah
+        <input type="radio" name="c" id="fah2cel" /> Fah2Cel
+
+        <br><br>
+
+        <input type="submit" id="btn" value="Convert" />
+    </form>
+
+    <h2 id="msg"></h2>
+
+    <script>
+        function convert(event) {
+            event.preventDefault();
+
+            let temp = document.getElementById("temp");
+            let cel2fah = document.getElementById("cel2fah");
+            let fah2cel = document.getElementById("fah2cel");
+            let btn = document.getElementById("btn");
+            let msg = document.getElementById("msg");
+
+            if (temp.value === "") {
+                alert("please enter temp");
+                msg.textContent = "";
+                temp.focus();
+                return;
+            }
+
+            btn.disabled = true;
+
+            let url = "";
+            if (cel2fah.checked)
+                url = "http://localhost:8080/celtofah/" + temp.value;
+            else
+                url = "http://localhost:8080/fahtocel/" + temp.value;
+
+            fetch(url)
+                .then(res => res.text())
+                .then(data => {
+                    msg.textContent = data;
+                    btn.disabled = false;
+                })
+                .catch(err => {
+                    msg.textContent = "issue " + err;
+                    btn.disabled = false;
+                });
+        }
+    </script>
+</body>
+</html>
