@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Temperature Converter App</title>
@@ -34,7 +35,7 @@
             let msg = document.getElementById("msg");
 
             if (temp.value === "") {
-                alert("please enter temp");
+                alert("Please enter temperature");
                 msg.textContent = "";
                 temp.focus();
                 return;
@@ -44,9 +45,9 @@
 
             let url = "";
             if (cel2fah.checked)
-                url = "http://localhost:8080/celtofah/" + temp.value;
+                url = "https://tempconverter-b.onrender.com/celtofah/" + temp.value;
             else
-                url = "http://localhost:8080/fahtocel/" + temp.value;
+                url = "https://tempconverter-b.onrender.com/fahtocel/" + temp.value;
 
             fetch(url)
                 .then(res => res.text())
@@ -55,7 +56,7 @@
                     btn.disabled = false;
                 })
                 .catch(err => {
-                    msg.textContent = "issue " + err;
+                    msg.textContent = "Error: " + err;
                     btn.disabled = false;
                 });
         }
